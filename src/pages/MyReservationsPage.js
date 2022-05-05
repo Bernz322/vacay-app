@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Grid, createStyles, Paper, Container, Pagination } from '@mantine/core'
-import { showNotification } from '@mantine/notifications';
 import { useSelector, useDispatch } from 'react-redux'
 import Helmet from 'react-helmet'
 
@@ -50,7 +49,7 @@ export default function MyReservationsPage() {
         dispatch(fetchAllReservationByUser())
     }, [dispatch, isReserveError, messageReserve])
 
-    console.log(reservations)
+    console.log(reservations[0])
 
     return (
         <Paper radius={0} className={classes.paper}>
@@ -64,6 +63,9 @@ export default function MyReservationsPage() {
                         <p>All your created reservations</p>
                     </div>
                 }
+                {reservations?.length <= 0 &&
+                    <EmptyNotice reservation="reservation" />
+                }
                 {reservations[0] !== undefined &&
                     <Grid justify={"left"} gutter="lg" >
                         {isReserveLoading ?
@@ -73,13 +75,11 @@ export default function MyReservationsPage() {
                                 <RoomCardSkeleton />
                             </>
                             :
-                            (reservations?.length <= 0) ?
-                                <EmptyNotice reservation="reservation" /> :
-                                currentReservations.map(reservation => {
-                                    return (
-                                        <ReservationCard reservation={reservation} key={reservation.id} />
-                                    )
-                                })
+                            currentReservations.map(reservation => {
+                                return (
+                                    <ReservationCard reservation={reservation} key={reservation.id} />
+                                )
+                            })
                         }
                     </Grid>}
                 {reservations?.length > 0 &&

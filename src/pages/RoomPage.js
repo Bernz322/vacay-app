@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Grid, createStyles, Paper, Container, Select, Space, Pagination } from '@mantine/core'
 import { useSelector, useDispatch } from 'react-redux'
-import { showNotification } from '@mantine/notifications';
 import Helmet from 'react-helmet'
 
 import { FilterRooms, RoomCard, RoomCardSkeleton } from '../components'
-import { fetchListings, listingReset } from '../features/listing/listingSlice';
+import { fetchListings } from '../features/listing/listingSlice';
 import { reservationReset } from '../features/reservation/reservationSlice';
 import { userReset } from '../features/user/userSlice';
 
@@ -77,7 +76,6 @@ export default function RoomPage() {
     const currentListings = onlineListing.slice(indexOfFirstListing, indexOfLastListing) // (Slice the listins from 0, 10)
 
     useEffect(() => {
-        dispatch(listingReset())
         dispatch(reservationReset())
         dispatch(userReset())
 

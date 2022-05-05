@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import { Container, Text, Grid, Paper, createStyles, Title, List, ThemeIcon, Group, Button, Image } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
 import { Check } from 'tabler-icons-react';
 import { useSelector, useDispatch } from 'react-redux';
-import Helmet from 'react-helmet'
 import { Link } from 'react-router-dom';
 
-import { fetchListings, listingReset } from '../features/listing/listingSlice';
+import { fetchListings } from '../features/listing/listingSlice';
 import { reservationReset } from '../features/reservation/reservationSlice';
 import { RoomCard, RoomCardSkeleton } from '../components'
 import img from "../images/hero-section.svg"
