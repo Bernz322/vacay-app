@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Beau Rivage
+- Font Author: Copyright 2004 The Beau Rivage Project Authors (https://github.com/googlefonts/beau-rivage)
+- Font Source: http://fonts.gstatic.com/s/beaurivage/v1/UcCi3FIgIG2bH4mMNWJUlmg3NZp8K2sL.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
