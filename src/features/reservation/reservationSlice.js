@@ -12,7 +12,8 @@ const initialState = {
     messageReserve: ""
 }
 
-const API_URL = '/api/reservation'
+// const API_URL = '/api/reservation'
+const API_URL = process.env.NODE_ENV !== 'production' ? `/api/reservation` : `${process.env.REACT_APP_API_ENDPOINT}api/reservation`
 
 export const createReservation = createAsyncThunk('reservation/create', async (reservationData, thunkAPI) => {
     try {

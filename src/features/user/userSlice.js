@@ -12,7 +12,8 @@ const initialState = {
 }
 
 
-const API_URL = '/api/user'
+// const API_URL = '/api/user'
+const API_URL = process.env.NODE_ENV !== 'production' ? `/api/user` : `${process.env.REACT_APP_API_ENDPOINT}api/user`
 
 export const getAllUsers = createAsyncThunk('user/fetchAll', async (_, thunkAPI) => {
     try {

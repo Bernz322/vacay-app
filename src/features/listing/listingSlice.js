@@ -10,7 +10,8 @@ const initialState = {
     messagesListing: ''
 }
 
-const API_URL = '/api/room'
+// const API_URL = '/api/room'
+const API_URL = process.env.NODE_ENV !== 'production' ? `/api/room` : `${process.env.REACT_APP_API_ENDPOINT}api/room`
 
 export const fetchListings = createAsyncThunk('listing/fetchAll', async (_, thunkAPI) => {
     try {

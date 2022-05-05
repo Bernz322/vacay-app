@@ -4,6 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
+.DS_Store
+node_modules
+.env
+.vercel
 
 # testing
 /coverage

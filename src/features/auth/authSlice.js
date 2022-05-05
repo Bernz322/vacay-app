@@ -12,7 +12,8 @@ const initialState = {
     message: ""
 }
 
-const API_URL = '/api/auth'
+// const API_URL = '/api/auth'
+const API_URL = process.env.NODE_ENV !== 'production' ? `/api/auth` : `${process.env.REACT_APP_API_ENDPOINT}api/auth`
 
 // Login User
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
