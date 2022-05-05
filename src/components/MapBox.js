@@ -3,8 +3,14 @@ import Map, { Marker, Popup } from 'react-map-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MapPin } from 'tabler-icons-react';
 import { Button, Space, Text } from '@mantine/core';
+import mapboxgl from 'mapbox-gl';
 
 export default function MapBox({ display, lat, long, zoom, height, newPin, setNewPin }) {
+    // The following is required to stop "npm build" from transpiling mapbox code.
+    // notice the exclamation point in the import.
+    // @ts-ignore
+    // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+    mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
     const mapRef = useRef();
 
     const handleAddPin = (e) => {
