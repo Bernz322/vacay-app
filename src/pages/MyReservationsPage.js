@@ -49,8 +49,6 @@ export default function MyReservationsPage() {
         dispatch(fetchAllReservationByUser())
     }, [dispatch, isReserveError, messageReserve])
 
-    console.log(reservations[0])
-
     return (
         <Paper radius={0} className={classes.paper}>
             <Helmet>
