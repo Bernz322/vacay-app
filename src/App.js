@@ -11,6 +11,7 @@ import { HomePage, Auth, Page404, RoomPage, PostPage, MyRoomPage, AboutPage, MyR
 import { Navbar, Footer } from "./components"
 import { hasTokenExpired } from "./utilities"
 import { logout, authReset } from './features/auth/authSlice';
+import { Helmet } from "react-helmet";
 
 function App() {
   const [colorScheme, setColorScheme] = useState(JSON.parse(localStorage.getItem('mantine-color-scheme')) || 'light');
@@ -78,6 +79,30 @@ function App() {
       <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
         <NotificationsProvider position='top-right'>
           <>
+            <Helmet>
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <meta name="theme-color" content="#228be68c" />
+              <meta name="description"
+                content="Find and host rooms within CARAGA Region for free. With map pinning support, listing dashboard and more features." />
+              <meta name="keywords"
+                content="apartment for rent, room for rent, house for rent, post property for rent, post apartment for rent, nightly rentals, monthly rentals, weekly rentals, daily rentals" />
+              <meta name="image" content="%PUBLIC_URL%/og.png" />
+              <meta property="og:title" content="Vacay - Houses, Apartment, Room For Rent" />
+              <meta property="og:description"
+                content="Find and host rooms within CARAGA Region for free. With map pinning support, listing dashboard and more features." />
+              <meta property="og:image" content="%PUBLIC_URL%/og.png" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <meta name="viewport" content="height=device-height, initial-scale=1.0" />
+
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:image" content="%PUBLIC_URL%/og.png" />
+
+              <meta name="twitter:creator" content="@brnz6000" />
+              <meta name="twitter:title" content="Vacay - Houses, Apartment, Room For Rent" />
+              <meta name="twitter:descripton"
+                content="Find and host rooms within CARAGA Region for free. With map pinning support, listing dashboard and more features." />
+              <title>Vacay - Houses, Apartment, Room For Rent</title>
+            </Helmet>
             <Navbar />
             <ScrollToTop />
             <Routes>
