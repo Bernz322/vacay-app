@@ -55,6 +55,14 @@ const EmptyNotice = ({ listing, review, reservation }) => {
 
     return (
         <Container className={classes.root}>
+            {listing === "home" &&
+                <>
+                    <Title className={classes.title}>No listings yet. Be the first one to do so.</Title>
+                    <Text color="dimmed" size="lg" align="center" className={classes.description}>
+                        Become a host for free. You have the freedom to choose your listing nightly rate!
+                    </Text>
+                </>
+            }
             {listing === "listing" &&
                 <>
                     <Title className={classes.title}>You have 0 listing</Title>

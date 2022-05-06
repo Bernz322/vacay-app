@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { fetchListings } from '../features/listing/listingSlice';
 import { reservationReset } from '../features/reservation/reservationSlice';
-import { RoomCard, RoomCardSkeleton } from '../components'
+import { EmptyNotice, RoomCard, RoomCardSkeleton } from '../components'
 import img from "../images/hero-section.svg"
 import { userReset } from '../features/user/userSlice';
 
@@ -164,16 +164,19 @@ export default function HomePage() {
                 </div>
 
                 <Grid justify={"space-around"}>
-                    {listings?.length <= 0 || isListingLoading ?
+                    {isListingLoading ?
                         <>
                             <RoomCardSkeleton />
                             <RoomCardSkeleton />
                             <RoomCardSkeleton />
                         </>
                         :
-                        listings?.map(listing => {
-                            return (listing.listing_status && <RoomCard redirect={REDIRECT_URL} listing={listing} key={listing.id} />)
-                        })
+                        listings?.length <= 0 ?
+                            <EmptyNotice listing="home" />
+                            :
+                            listings?.map(listing => {
+                                return (listing.listing_status && <RoomCard redirect={REDIRECT_URL} listing={listing} key={listing.id} />)
+                            })
                     }
                 </Grid>
             </Container>
