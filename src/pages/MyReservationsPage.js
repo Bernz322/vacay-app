@@ -6,7 +6,7 @@ import Helmet from 'react-helmet'
 import { fetchAllReservationByUser, reservationReset } from "../features/reservation/reservationSlice"
 import { EmptyNotice, ReservationCard, RoomCardSkeleton } from '../components'
 import { listingReset } from '../features/listing/listingSlice';
-import { userReset } from '../features/user/userSlice';
+import { PageLoader } from '.'
 
 const useStyles = createStyles((theme) => ({
     paper: {
@@ -49,40 +49,47 @@ export default function MyReservationsPage() {
     }, [dispatch, isReserveError, messageReserve])
 
     return (
-        <Paper radius={0} className={classes.paper}>
-            <Helmet>
-                <title>My Reservations</title>
-            </Helmet>
-            <Container size="xl">
-                {reservations?.length > 0 &&
-                    <div style={{ textAlign: "center", marginBottom: 50 }}>
-                        <h1 className={classes.h1}>All your reservations</h1>
-                        <p>All your created reservations</p>
-                    </div>
-                }
-                {reservations?.length <= 0 &&
-                    <EmptyNotice reservation="reservation" />
-                }
-                {reservations[0] !== undefined &&
-                    <Grid justify={"left"} gutter="lg" >
-                        {isReserveLoading ?
-                            <>
-                                <RoomCardSkeleton />
-                                <RoomCardSkeleton />
-                                <RoomCardSkeleton />
-                            </>
-                            :
-                            currentReservations.map(reservation => {
-                                return (
-                                    <ReservationCard reservation={reservation} key={reservation.id} />
-                                )
-                            })
+        <>
+            {!isReserveLoading && reservations ?
+                <Paper radius={0} className={classes.paper}>
+                    <Helmet>
+                        <title>My Reservations</title>
+                    </Helmet>
+                    <Container size="xl">
+                        {reservations?.length > 0 &&
+                            <div style={{ textAlign: "center", marginBottom: 50 }}>
+                                <h1 className={classes.h1}>All your reservations</h1>
+                                <p>All your created reservations</p>
+                            </div>
                         }
-                    </Grid>}
-                {reservations?.length > 0 &&
-                    <Pagination page={currentPage} onChange={setCurrentPage} total={Math.ceil(reservations?.length / reservationsPerPage)} className={classes.pagination} />
-                }
-            </Container>
-        </Paper >
+                        {reservations?.length <= 0 &&
+                            <EmptyNotice reservation="reservation" />
+                        }
+                        {reservations[0] !== undefined &&
+                            <Grid justify={"left"} gutter="lg" >
+                                {isReserveLoading ?
+                                    <>
+                                        <RoomCardSkeleton />
+                                        <RoomCardSkeleton />
+                                        <RoomCardSkeleton />
+                                    </>
+                                    :
+                                    currentReservations.map(reservation => {
+                                        return (
+                                            <ReservationCard reservation={reservation} key={reservation.id} />
+                                        )
+                                    })
+                                }
+                            </Grid>}
+                        {reservations?.length > 0 &&
+                            <Pagination page={currentPage} onChange={setCurrentPage} total={Math.ceil(reservations?.length / reservationsPerPage)} className={classes.pagination} />
+                        }
+                    </Container>
+                </Paper >
+                :
+                <PageLoader />
+            }
+        </>
+
     )
 }

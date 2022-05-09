@@ -12,7 +12,6 @@ import { fetchSingleListing, deleteListing } from '../features/listing/listingSl
 import { checkAvailability, createReservation, fetchAllRoomReservation } from '../features/reservation/reservationSlice'
 import { EmptyNotice, MapBox, ReviewCard } from '../components';
 import { money, reviewCount, roomRating } from '../utilities';
-import { userReset } from '../features/user/userSlice';
 import { reservationReset } from '../features/reservation/reservationSlice';
 import { Page404, PageLoader } from '.'
 
@@ -146,7 +145,7 @@ const useStyles = createStyles((theme) => ({
 
 export default function SingleRoomPage() {
     const dispatch = useDispatch()
-    const { listing, isListingError, isListingSuccess, isListingLoading, messagesListing } = useSelector(state => state.listing)
+    const { listing, isListingSuccess, isListingLoading, messagesListing } = useSelector(state => state.listing)
     const { user } = useSelector(state => state.auth)
     const { availability, roomReservations, isReserveLoading, isReserveSuccess } = useSelector(state => state.reservation)
 

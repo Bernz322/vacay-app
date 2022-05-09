@@ -121,8 +121,6 @@ export const deleteReservation = createAsyncThunk('reservation/delete', async (i
     }
 })
 
-
-
 const reservationSlice = createSlice({
     name: "reservation",
     initialState,
@@ -202,7 +200,9 @@ const reservationSlice = createSlice({
             .addCase(editReservation.fulfilled, (state, action) => {
                 state.isReserveLoading = false
                 state.isReserveSuccess = true
-                state.reservation = state.reservation.id === action.payload.id ? action.payload : state.reservation
+                state.roomReservations = state.roomReservations.map((reservation) =>
+                    reservation.id === action.payload.id ? action.payload : reservation
+                );
             })
             .addCase(editReservation.rejected, (state, action) => {
                 state.isReserveLoading = false

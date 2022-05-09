@@ -7,7 +7,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import Helmet from 'react-helmet'
 
-import { fetchSingleListing, editSingleListing, deleteListing } from "../features/listing/listingSlice"
+import { fetchSingleListing, editSingleListing, deleteListing, listingReset } from "../features/listing/listingSlice"
 import { fetchAllRoomReservation, editReservation, reservationReset } from "../features/reservation/reservationSlice"
 import { reviewCount, roomRating } from '../utilities';
 import { Page404, PageLoader } from '.';
@@ -99,22 +99,18 @@ export default function SingleMyRoomPage({ colorScheme }) {
     const { user } = useSelector(state => state.auth)
 
     const [deleteModal, setDeleteModal] = useState(false);
-    const [rerender, setRerender] = useState(false);
 
 
     const handleReservationStatus = (reservation_id, action) => {
         dispatch(editReservation({ reservation_id, action }))
-        setRerender(!rerender)
     }
 
     const handleGuestStatus = (reservation_id, status) => {
         dispatch(editReservation({ reservation_id, status }))
-        setRerender(!rerender)
     }
 
     const handleListingStatus = (room_id, status) => {
         dispatch(editSingleListing({ room_id, status }))
-        setRerender(!rerender)
     }
 
     const handleDelete = () => {
@@ -297,12 +293,13 @@ export default function SingleMyRoomPage({ colorScheme }) {
     ]
 
     useEffect(() => {
-        dispatch(reservationReset())
-
         dispatch(fetchAllRoomReservation(id))
         dispatch(fetchSingleListing(id))
 
-    }, [dispatch, id, isListingError, messagesListing, isReserveError, messageReserve, rerender,]);
+        return () => {
+            dispatch(reservationReset())
+        }
+    }, [dispatch, id]);
 
     return (
         <>

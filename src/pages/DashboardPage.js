@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AppShell, Navbar, createStyles, Group, Code, Paper, MediaQuery, Aside, Container, List, ThemeIcon, Title, Tooltip, Button, Badge, Modal, Text, NumberInput, Textarea, Loader, LoadingOverlay } from '@mantine/core';
-import { ArrowNarrowDown, BuildingWarehouse, Check, CircleCheck, CircleDashed, CircleX, Edit, Eye, InfoCircle, LayoutDashboard, Trash, User, X } from 'tabler-icons-react';
+import { ArrowNarrowDown, BuildingWarehouse, Check, CircleCheck, CircleDashed, Edit, Eye, InfoCircle, LayoutDashboard, Trash, User, X } from 'tabler-icons-react';
 import DataTable from 'react-data-table-component'
 import Helmet from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux';
