@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createStyles, Text, Button, Container, Group, Paper, Skeleton, Grid, Image, SimpleGrid, Center, Avatar, Card, NumberInput, Loader, LoadingOverlay, Title } from '@mantine/core';
+import { createStyles, Text, Button, Container, Group, Paper, Grid, Image, SimpleGrid, Center, Avatar, Card, NumberInput, Loader, LoadingOverlay, Title } from '@mantine/core';
 import { DateRangePicker } from '@mantine/dates';
 import { useParams, useNavigate, Link } from "react-router-dom";
 import dayjs from 'dayjs';

@@ -3,10 +3,10 @@ import { useForm, useToggle, upperFirst } from '@mantine/hooks';
 import {
     TextInput, PasswordInput, Text, Paper, Group, Button, Divider,
     Anchor, createStyles, Container, Textarea, NumberInput,
-    useMantineTheme, Image, Loader
+    useMantineTheme, Image, Loader, Space
 } from '@mantine/core';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { Photo, Upload, X } from 'tabler-icons-react';
+import { BrandGithub, BrandGoogle, Photo, Upload, X } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -30,6 +30,22 @@ const useStyles = createStyles((theme) => ({
     title: {
         color: theme.colorScheme === 'dark' ? theme.colors.blue[2] : theme.colors.dark[5],
     },
+    oauth: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginTop: '15px',
+        [theme.fn.smallerThan('md')]: {
+            flexDirection: 'column',
+        },
+    },
+    oauthBtn: {
+        width: '100%',
+        [theme.fn.smallerThan('md')]: {
+            margin: '10px 0',
+        },
+    }
 }));
 
 function getIconColor(status, theme) {
@@ -214,25 +230,26 @@ export default function Auth() {
             <Helmet>
                 <title>Authentication</title>
             </Helmet>
-            <Container size={420} my={40} className={classes.container} style={{ padding: "50px 35px" }}>
+            <Container size={500} my={40} className={classes.container} style={{ padding: "50px 35px" }}>
                 <Text size="lg" weight={500}>
                     Welcome to <span className={classes.title}>Vacay</span>, {type} with
                 </Text>
 
-                <Group grow mb="md" mt="md">
-                    <Button>
-                        Continue with Google</Button>
-                    <Button
+                <div className={classes.oauth}>
+                    <Button className={classes.oauthBtn} leftIcon={<BrandGoogle size={14} />}> Continue with Google</Button>
+                    <Space w="sm" />
+                    <Button className={classes.oauthBtn}
                         sx={(theme) => ({
-                            backgroundColor: theme.colors.dark[theme.colorScheme === 'dark' ? 5 : 6],
+                            backgroundColor: theme.colors.dark[theme.colorScheme === 'dark' ? 4 : 5],
                             color: '#fff',
                             '&:hover': {
-                                backgroundColor: theme.colors.dark[theme.colorScheme === 'dark' ? 5 : 6],
+                                backgroundColor: theme.colors.dark[theme.colorScheme === 'dark' ? 5 : 4],
                             },
                         })}
-                    >Login with Github</Button>
-                </Group>
-
+                        leftIcon={<BrandGithub size={14} />}
+                    >Login with Github
+                    </Button>
+                </div>
                 <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
                 <form onSubmit={handleSubmit}>
@@ -281,14 +298,6 @@ export default function Auth() {
                                 {(status) => dropzoneChildren(status, imgArray, theme)}
                             </Dropzone>
                         )}
-
-                        {/* {type === 'register' && (
-                            <Checkbox
-                                label="I accept terms and conditions"
-                                checked={form.values.terms}
-                                onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
-                            />
-                        )} */}
                     </Group>
 
                     <Group position="apart" mt="xl">
@@ -297,7 +306,7 @@ export default function Auth() {
                                 ? 'Already have an account? Login'
                                 : "Don't have an account? Register"}
                         </Anchor>
-                        <Button type="submit">{isLoading ? <Loader color="white" size="sm" /> : upperFirst(type)}</Button>
+                        <Button type="submit" disabled={isLoading}>{isLoading ? <Loader color="white" size="sm" /> : upperFirst(type)}</Button>
                     </Group>
                 </form>
             </Container>

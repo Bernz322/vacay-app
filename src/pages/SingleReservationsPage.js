@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createStyles, Text, Button, Container, Group, Paper, Skeleton, Grid, Image, SimpleGrid, Center, Avatar, Card, NumberInput, Textarea, Title, Loader, LoadingOverlay } from '@mantine/core';
+import { createStyles, Text, Button, Container, Group, Paper, Skeleton, Grid, Image, SimpleGrid, Center, Avatar, Card, NumberInput, Textarea, Title, Loader } from '@mantine/core';
 import { DateRangePicker } from '@mantine/dates';
 import { showNotification } from '@mantine/notifications';
 import { useParams } from "react-router-dom";
@@ -149,7 +149,7 @@ export default function SingleReservationsPage() {
     const { classes } = useStyles();
     const { id } = useParams()
     const dispatch = useDispatch();
-    const { reservation, isReserveError, messageReserve, isReserveLoading, isSuccess } = useSelector(state => state.reservation)
+    const { reservation, isReserveError, messageReserve, isReserveLoading } = useSelector(state => state.reservation)
     const { isReviewLoading, isReviewError, messageReview } = useSelector(state => state.review)
     const { user } = useSelector(state => state.auth)
 
