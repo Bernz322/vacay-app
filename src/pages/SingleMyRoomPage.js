@@ -10,7 +10,6 @@ import Helmet from 'react-helmet'
 import { fetchSingleListing, editSingleListing, deleteListing } from "../features/listing/listingSlice"
 import { fetchAllRoomReservation, editReservation, reservationReset } from "../features/reservation/reservationSlice"
 import { reviewCount, roomRating } from '../utilities';
-import { userReset } from '../features/user/userSlice';
 import { Page404, PageLoader } from '.';
 
 const useStyles = createStyles((theme) => ({
@@ -299,7 +298,6 @@ export default function SingleMyRoomPage({ colorScheme }) {
 
     useEffect(() => {
         dispatch(reservationReset())
-        dispatch(userReset())
 
         dispatch(fetchAllRoomReservation(id))
         dispatch(fetchSingleListing(id))

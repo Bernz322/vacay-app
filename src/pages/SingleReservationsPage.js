@@ -192,7 +192,6 @@ export default function SingleReservationsPage() {
 
     useEffect(() => {
         dispatch(listingReset())
-        dispatch(userReset())
 
         dispatch(fetchSingleReservation(id))
     }, [dispatch, isReserveError, messageReserve, id, rerender]);
