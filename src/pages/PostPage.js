@@ -238,7 +238,7 @@ export default function PostPage() {
     useEffect(() => {
         dispatch(listingReset())
         dispatch(reservationReset())
-        dispatch(userReset())
+
         setListingData({ ...listingData, room_image: imgArray })
         if (isListingError) {
             showNotification({

@@ -74,7 +74,6 @@ export default function MyRoomPage() {
     useEffect(() => {
         dispatch(listingReset())
         dispatch(reservationReset())
-        dispatch(userReset())
 
         dispatch(fetchListingsOfUser(user?.id))
     }, [dispatch, isListingError, messagesListing, user.id]);

@@ -77,7 +77,6 @@ export default function RoomPage() {
 
     useEffect(() => {
         dispatch(reservationReset())
-        dispatch(userReset())
 
         dispatch(fetchListings())
     }, [isListingError, dispatch, messagesListing]);

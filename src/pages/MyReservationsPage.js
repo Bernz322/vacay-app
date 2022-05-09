@@ -44,7 +44,6 @@ export default function MyReservationsPage() {
     useEffect(() => {
         dispatch(listingReset())
         dispatch(reservationReset())
-        dispatch(userReset())
 
         dispatch(fetchAllReservationByUser())
     }, [dispatch, isReserveError, messageReserve])

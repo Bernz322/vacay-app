@@ -145,7 +145,7 @@ export const listingSlice = createSlice({
             .addCase(editSingleListing.fulfilled, (state, action) => {
                 state.isListingLoading = false
                 state.isListingSuccess = true
-                state.listing = action.payload
+                state.listing = state.listing.id === action.payload.id ? action.payload : state.listing
             })
             .addCase(editSingleListing.rejected, (state, action) => {
                 state.isListingLoading = false

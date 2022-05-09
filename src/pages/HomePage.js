@@ -101,7 +101,6 @@ export default function HomePage() {
 
     useEffect(() => {
         dispatch(reservationReset())
-        dispatch(userReset())
 
         dispatch(fetchListings())
     }, [dispatch, isListingError, messagesListing]);
