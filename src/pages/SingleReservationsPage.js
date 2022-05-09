@@ -159,6 +159,7 @@ export default function SingleReservationsPage() {
     const [selectedImage, setselectedImage] = useState();
     const [comment, setComment] = useState();
     const [rating, setRating] = useState();
+    const [rerender, setRerender] = useState(false);
 
     const handleReviewSubmit = () => {
         const reviewData = {
@@ -175,8 +176,12 @@ export default function SingleReservationsPage() {
             })
         }
 
-        dispatch(createReview(reviewData))
-        window.location.reload();
+        const payload = dispatch(createReview(reviewData))
+
+        if (payload) {
+            setRerender(!rerender)
+            // window.location.reload()
+        }
 
         if (isReviewError) {
             showNotification({
@@ -192,7 +197,7 @@ export default function SingleReservationsPage() {
         dispatch(listingReset())
 
         dispatch(fetchSingleReservation(id))
-    }, [dispatch, id]);
+    }, [dispatch, id, rerender]);
 
     return (
         <>

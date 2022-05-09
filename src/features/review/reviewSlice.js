@@ -9,7 +9,6 @@ const initialState = {
     messageReview: ''
 }
 
-// const API_URL = '/api/review'
 const API_URL = process.env.NODE_ENV !== 'production' ? `/api/review` : `${process.env.REACT_APP_API_ENDPOINT}api/review`
 
 export const createReview = createAsyncThunk('review/create', async (reviewData, thunkAPI) => {
