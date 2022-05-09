@@ -273,10 +273,9 @@ export default function SingleRoomPage() {
     }
 
     useEffect(() => {
-
         dispatch(fetchSingleListing(id))
         dispatch(fetchAllRoomReservation(id))
-    }, [dispatch, isListingError, messagesListing, id, availability]);
+    }, [dispatch, id, availability]);
 
     return (
         <>

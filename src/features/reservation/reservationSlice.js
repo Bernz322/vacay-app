@@ -202,7 +202,7 @@ const reservationSlice = createSlice({
             .addCase(editReservation.fulfilled, (state, action) => {
                 state.isReserveLoading = false
                 state.isReserveSuccess = true
-                state.reservation = action.payload
+                state.reservation = state.reservation.id === action.payload.id ? action.payload : state.reservation
             })
             .addCase(editReservation.rejected, (state, action) => {
                 state.isReserveLoading = false

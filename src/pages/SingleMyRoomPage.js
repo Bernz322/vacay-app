@@ -304,9 +304,6 @@ export default function SingleMyRoomPage({ colorScheme }) {
 
     }, [dispatch, id, isListingError, messagesListing, isReserveError, messageReserve, rerender,]);
 
-    console.log(listing?.User?.id);
-    console.log(user?.id);
-
     return (
         <>
             {!isListingLoading && listing ?

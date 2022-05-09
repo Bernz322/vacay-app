@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
     currentUser: {},
-    currentProfile:{},
+    currentProfile: {},
     users: [],
     isUserLoading: false,
     isUserError: false,
@@ -166,7 +166,7 @@ export const userSlice = createSlice({
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.isUserLoading = false
                 state.isUserSuccess = true
-                state.currentUser = action.payload
+                state.currentUser = state.currentUser.id === action.payload.id ? action.payload : state.currentUser
             })
             .addCase(updateUser.rejected, (state, action) => {
                 state.isUserLoading = false
