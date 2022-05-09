@@ -14,7 +14,6 @@ import { createReview } from '../features/review/reviewSlice'
 import { EmptyNotice, ReviewCard } from '../components';
 import { money } from '../utilities';
 import { listingReset } from '../features/listing/listingSlice';
-import { userReset } from '../features/user/userSlice';
 import { Page404, PageLoader } from '.'
 
 const useStyles = createStyles((theme) => ({
@@ -149,7 +148,7 @@ export default function SingleReservationsPage() {
     const { classes } = useStyles();
     const { id } = useParams()
     const dispatch = useDispatch();
-    const { reservation, isReserveError, messageReserve, isReserveLoading } = useSelector(state => state.reservation)
+    const { reservation, isReserveLoading } = useSelector(state => state.reservation)
     const { isReviewLoading, isReviewError, messageReview } = useSelector(state => state.review)
     const { user } = useSelector(state => state.auth)
 
@@ -160,7 +159,6 @@ export default function SingleReservationsPage() {
     const [selectedImage, setselectedImage] = useState();
     const [comment, setComment] = useState();
     const [rating, setRating] = useState();
-    const [rerender, setRerender] = useState(false);
 
     const handleReviewSubmit = () => {
         const reviewData = {
@@ -178,7 +176,7 @@ export default function SingleReservationsPage() {
         }
 
         dispatch(createReview(reviewData))
-        setRerender(!rerender)
+        window.location.reload();
 
         if (isReviewError) {
             showNotification({
@@ -194,7 +192,7 @@ export default function SingleReservationsPage() {
         dispatch(listingReset())
 
         dispatch(fetchSingleReservation(id))
-    }, [dispatch, isReserveError, messageReserve, id, rerender]);
+    }, [dispatch, id]);
 
     return (
         <>
