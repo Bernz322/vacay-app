@@ -21,7 +21,7 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export default function ReviewCard({ reservation }) {
+export default function ReviewCard({ reservation, review }) {
     const { classes } = useStyles();
     dayjs.extend(relativeTime)
     return (
@@ -39,10 +39,10 @@ export default function ReviewCard({ reservation }) {
                             </div>
                         </Group>
                     </Link>
-                    <Text size="sm"> Rated: {reservation?.Review?.rating} ⭐</Text>
+                    <Text size="sm"> Rated: {reservation?.Review?.rating || review?.rating} ⭐</Text>
                 </Group>
                 <Text className={classes.body} size="sm">
-                    {reservation?.Review?.comment}
+                    {reservation?.Review?.comment || review?.comment}
                 </Text>
             </Container>
         </Grid.Col>

@@ -379,7 +379,7 @@ export default function SingleReservationsPage() {
                                 <Text weight={300} mb='md' size='xl'>Give us feedback to serve you better next time 😃</Text>
                                 <Grid justify={"center"} gutter="xl">
                                     {reservation?.reservation?.Review || hasReviewed ?
-                                        <ReviewCard reservation={reservation.reservation} />
+                                        <ReviewCard reservation={reservation.reservation} review={review} />
                                         :
                                         <EmptyNotice review="review2" />
                                     }
