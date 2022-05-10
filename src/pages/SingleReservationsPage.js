@@ -149,7 +149,7 @@ export default function SingleReservationsPage() {
     const { id } = useParams()
     const dispatch = useDispatch();
     const { reservation, isReserveLoading } = useSelector(state => state.reservation)
-    const { isReviewLoading, isReviewError, messageReview } = useSelector(state => state.review)
+    const { review, isReviewSuccess, isReviewLoading, isReviewError, messageReview } = useSelector(state => state.review)
     const { user } = useSelector(state => state.auth)
 
     const date = [new Date(reservation?.reservation?.start_date), new Date(reservation?.reservation?.end_date)] || "";
@@ -160,6 +160,8 @@ export default function SingleReservationsPage() {
     const [comment, setComment] = useState();
     const [rating, setRating] = useState();
     const [rerender, setRerender] = useState(false);
+
+    const hasReviewed = Object.keys(review).length !== 0
 
     const handleReviewSubmit = () => {
         const reviewData = {
@@ -176,17 +178,22 @@ export default function SingleReservationsPage() {
             })
         }
 
-        const payload = dispatch(createReview(reviewData))
+        dispatch(createReview(reviewData))
 
-        if (payload) {
-            setRerender(!rerender)
-            // window.location.reload()
-        }
-
+        setRerender(!rerender)
         if (isReviewError) {
             showNotification({
                 title: 'Uhuh! Something went wrong while submitting your review',
                 message: messageReview,
+                autoclose: 4000,
+                color: "red"
+            })
+            return
+        }
+
+        if (isReviewSuccess) {
+            showNotification({
+                title: 'Thanks for your feedback',
                 autoclose: 4000,
                 color: "red"
             })
@@ -198,6 +205,8 @@ export default function SingleReservationsPage() {
 
         dispatch(fetchSingleReservation(id))
     }, [dispatch, id, rerender]);
+
+    console.log(hasReviewed);
 
     return (
         <>
@@ -227,7 +236,6 @@ export default function SingleReservationsPage() {
                                             {reservation?.room_image?.map((image, index) => {
                                                 return (
                                                     <Grid.Col span={4} key={index}>
-                                                        {/* <Skeleton height={150} radius="md" animate={false} /> */}
                                                         <Image height={120} radius="md" src={image} alt="Room image" onClick={() => setselectedImage(image)} style={{ cursor: 'pointer' }} />
                                                     </Grid.Col>
                                                 )
@@ -370,7 +378,7 @@ export default function SingleReservationsPage() {
                             <Card.Section className={classes.section} style={{ paddingRight: 0, paddingLeft: 0, paddingTop: 15, paddingBottom: 15 }}>
                                 <Text weight={300} mb='md' size='xl'>Give us feedback to serve you better next time 😃</Text>
                                 <Grid justify={"center"} gutter="xl">
-                                    {reservation?.reservation?.Review ?
+                                    {reservation?.reservation?.Review || hasReviewed ?
                                         <ReviewCard reservation={reservation.reservation} />
                                         :
                                         <EmptyNotice review="review2" />
@@ -379,21 +387,21 @@ export default function SingleReservationsPage() {
 
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                                     <Textarea style={{ maxWidth: '800px', width: '100%' }} mr='sm' mb='md' description="Share your experience with us!"
-                                        placeholder={reservation?.reservation?.Review || reservation?.reservation?.reservation_status ? "You have already reviewed this reservation." : "Your review goes here"}
-                                        disabled={reservation?.reservation?.Review || !reservation?.reservation?.reservation_status}
+                                        placeholder={(reservation?.reservation?.Review || reservation?.reservation?.reservation_status || hasReviewed) ? "You have already reviewed this reservation." : "Your review goes here"}
+                                        disabled={reservation?.reservation?.Review || !reservation?.reservation?.reservation_status || hasReviewed}
                                         label="Your review" mt='md' radius="md" autosize minRows={2}
                                         onChange={(e) => setComment(e.target.value)}
                                     />
 
-                                    {(!reservation?.reservation?.Review || !reservation?.reservation?.reservation_status) &&
+                                    {((!reservation?.reservation?.Review || !reservation?.reservation?.reservation_status) || !hasReviewed) &&
                                         <ReactStars count={5} onChange={(e) => setRating(e)} size={24} activeColor="#ffd700"
                                             emptyIcon={<i className="far fa-star"></i>}
                                             halfIcon={<i className="fa fa-star-half-alt"></i>}
                                             fullIcon={<i className="fa fa-star"></i>}
                                         />
                                     }
-                                    <Button style={{ maxWidth: '800px', width: '100%' }} mt='md' disabled={!reservation?.reservation?.reservation_status || reservation?.reservation?.Review}
-                                        className={(!reservation?.reservation?.reservation_status || reservation?.reservation?.Review) && classes.disabledButton}
+                                    <Button style={{ maxWidth: '800px', width: '100%' }} mt='md' disabled={!reservation?.reservation?.reservation_status || reservation?.reservation?.Review || hasReviewed}
+                                        className={(!reservation?.reservation?.reservation_status || reservation?.reservation?.Review || hasReviewed) && classes.disabledButton}
                                         onClick={handleReviewSubmit}
                                     >{isReviewLoading ? <Loader color="white" size="sm" /> : "Submit Review"}</Button>
                                 </div>
