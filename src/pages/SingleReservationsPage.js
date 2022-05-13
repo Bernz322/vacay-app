@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createStyles, Text, Button, Container, Group, Paper, Skeleton, Grid, Image, SimpleGrid, Center, Avatar, Card, NumberInput, Textarea, Title, Loader } from '@mantine/core';
+import { createStyles, Text, Button, Container, Group, Paper, Grid, Image, SimpleGrid, Center, Avatar, Card, NumberInput, Textarea, Title, Loader } from '@mantine/core';
 import { DateRangePicker } from '@mantine/dates';
 import { showNotification } from '@mantine/notifications';
 import { useParams } from "react-router-dom";
@@ -11,7 +11,7 @@ import Helmet from 'react-helmet'
 
 import { fetchSingleReservation } from '../features/reservation/reservationSlice'
 import { createReview } from '../features/review/reviewSlice'
-import { EmptyNotice, ReviewCard } from '../components';
+import { EmptyNotice, MapBox, ReviewCard } from '../components';
 import { money } from '../utilities';
 import { listingReset } from '../features/listing/listingSlice';
 import { Page404, PageLoader } from '.'
@@ -206,8 +206,6 @@ export default function SingleReservationsPage() {
         dispatch(fetchSingleReservation(id))
     }, [dispatch, id, rerender]);
 
-    console.log(hasReviewed);
-
     return (
         <>
             {(!isReserveLoading && reservation) ?
@@ -244,7 +242,17 @@ export default function SingleReservationsPage() {
                                     </SimpleGrid>
                                 </Container>
                                 <Container className={classes.divider} style={{ paddingRight: 0 }}>
-                                    <Skeleton height={535} radius="md" animate={true} style={{ zIndex: 1 }} />
+                                    {(reservation?.reservation?.Room?.latitude || reservation.reservation?.Room?.longitude) ?
+                                        <Container pl={0} pr={0}>
+                                            <MapBox display={true} lat={reservation?.reservation?.Room?.latitude} long={reservation?.reservation?.Room?.longitude} zoom={14} />
+                                        </Container>
+                                        :
+                                        <Paper withBorder sx={{ height: 535, padding: 25 }}>
+                                            <Title sx={{ textAlign: 'center', color: '#74c0fc' }}>This listing has no map</Title>
+                                            <Text sx={{ textAlign: 'left' }} size="sm" mt='md'>The owner has not specified a map on this listing.</Text>
+                                            <Text sx={{ textAlign: 'left' }} size="sm" mt='md'>You can still check where this listing is located in the address below</Text>
+                                        </Paper>
+                                    }
                                 </Container>
                             </Container>
                             <Container className={classes.main} size='xl' style={{ paddingLeft: 0, paddingRight: 0 }}>

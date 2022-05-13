@@ -306,7 +306,6 @@ export default function SingleRoomPage() {
                                             {listing?.room_image?.map((image, index) => {
                                                 return (
                                                     <Grid.Col span={4} key={index}>
-                                                        {/* <Skeleton height={150} radius="md" animate={false} /> */}
                                                         <Image height={120} radius="md" src={image} alt="Room image" onClick={() => setselectedImage(image)} style={{ cursor: 'pointer' }} />
                                                     </Grid.Col>
                                                 )
