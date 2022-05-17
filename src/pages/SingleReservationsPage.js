@@ -176,6 +176,7 @@ export default function SingleReservationsPage() {
                 autoclose: 5000,
                 color: "red"
             })
+            return
         }
 
         dispatch(createReview(reviewData))

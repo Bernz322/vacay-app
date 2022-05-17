@@ -75,13 +75,7 @@ export const fetchSingleReservation = createAsyncThunk('reservation/fetchOne', a
 
 export const fetchAllRoomReservation = createAsyncThunk('reservation/fetchRoomReservations', async (id, thunkAPI) => {
     try {
-        const token = thunkAPI.getState().auth.user.token
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-        const res = await axios.get(`${API_URL}/room/${id}`, config)
+        const res = await axios.get(`${API_URL}/room/${id}`)
         return (res.data)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
