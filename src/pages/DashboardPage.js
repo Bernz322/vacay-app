@@ -233,7 +233,7 @@ export default function DashboardPage({ colorScheme }) {
         { name: 'Room ID', selector: row => row.id, sortable: true, left: true },
         { name: 'Room Name', selector: row => row.room_name, sortable: true, left: true },
         { name: 'Room Type', selector: row => row.room_type, sortable: true, left: true },
-        { name: 'Room Owner', selector: row => row.User.name, sortable: true, left: true, },
+        { name: 'Room Owner', selector: row => row?.User?.name, sortable: true, left: true, },
         { name: 'City', selector: row => row.city, left: true, ompact: true, sortable: true, },
         { name: 'Province', selector: row => row.province, left: true, compact: true, sortable: true, },
         { name: 'Price', selector: row => `₱ ${money(row.price)}/ night`, left: true, compact: true, sortable: true, },
@@ -368,6 +368,7 @@ export default function DashboardPage({ colorScheme }) {
                             data={users}
                             pagination
                             dense
+                            progressPending={isUserLoading}
                             highlightOnHover
                             pointerOnHover
                             sortIcon={<ArrowNarrowDown />}
