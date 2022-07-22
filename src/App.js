@@ -24,12 +24,14 @@ function App() {
     if (user !== null || user !== undefined) {
       if (hasTokenExpired(user)) {
         dispatch(logout())
-        dispatch(authReset())
-        navigate('/')
-        console.log(
-          "%cExpired token. Please login again.",
-          "color: yellow; font-size: 35px; background-color: red;"
-        );
+        dispatch(authReset()).then(() => {
+          navigate('/')
+          console.log(
+            "%cExpired token. Please login again.",
+            "color: yellow; font-size: 35px; background-color: red;"
+          );
+        })
+
       }
     }
   }, [colorScheme, user, dispatch, navigate]);

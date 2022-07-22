@@ -179,10 +179,11 @@ export default function PostPage() {
             longitude: newPin?.longitude
         }
 
-        dispatch(createListing(data))
+        dispatch(createListing(data)).then(() => {
+            setNewPin()
+            navigate('/listings')
+        })
 
-        setNewPin()
-        // navigate('/listings')
     }
 
     const uploadImage = (img) => {

@@ -113,8 +113,9 @@ export default function SingleMyRoomPage({ colorScheme }) {
     }
 
     const handleDelete = () => {
-        dispatch(deleteListing(id));
-        navigate('/listings')
+        dispatch(deleteListing(id)).then(() => {
+            navigate('/listings')
+        })
     }
 
     const reservationsColumns = [

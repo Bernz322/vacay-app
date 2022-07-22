@@ -1,7 +1,6 @@
 import { showNotification } from "@mantine/notifications";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
 import { Check, X } from "tabler-icons-react";
 
 const initialState = {
@@ -98,7 +97,6 @@ export const editSingleListing = createAsyncThunk('listing/editOne', async (data
 })
 
 export const createListing = createAsyncThunk('listing/create', async (listingData, thunkAPI) => {
-    const navigate = useNavigate();
     try {
         const token = thunkAPI.getState().auth.user.token
         const config = {
@@ -116,7 +114,6 @@ export const createListing = createAsyncThunk('listing/create', async (listingDa
                 icon: <Check />
             })
         }
-        navigate('/listings')
         return (res.data)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()

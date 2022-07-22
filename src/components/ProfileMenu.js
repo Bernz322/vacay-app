@@ -107,15 +107,17 @@ export default function ProfileMenu() {
             })
             dispatch(logout())
             dispatch(authReset())
-            dispatch(userReset())
-            navigate('/')
+            dispatch(userReset()).then(() => {
+                navigate('/')
+            })
         }
     }
 
     const handleLogout = () => {
         dispatch(logout())
-        dispatch(authReset())
-        navigate('/')
+        dispatch(authReset()).then(() => {
+            navigate('/')
+        })
     }
 
     useEffect(() => {
