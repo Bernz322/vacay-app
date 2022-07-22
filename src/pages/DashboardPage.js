@@ -129,9 +129,11 @@ export default function DashboardPage({ colorScheme }) {
             })
         }
 
-        dispatch(updateUser(data))
-        setNewPhone()
-        setEditProfileOpened(false)
+        dispatch(updateUser(data)).then(() => {
+            setNewPhone()
+            setEditProfileOpened(false)
+            setRerender(!rerender)
+        })
         if (isUserSuccess) {
             showNotification({
                 title: 'Profile updated successfully!',
@@ -151,7 +153,7 @@ export default function DashboardPage({ colorScheme }) {
             })
         }
 
-        setRerender(!rerender)
+
     }
     const handleUserDeleteButtonClick = (id) => {
         setUserID(id)
@@ -160,7 +162,10 @@ export default function DashboardPage({ colorScheme }) {
     const handleUserDelete = () => {
 
         dispatch(deleteUser(userID))
-        setDeleteUserModal(false)
+            .then(() => {
+                setDeleteUserModal(false)
+                setRerender(!rerender)
+            })
         if (isUserSuccess) {
             showNotification({
                 title: 'User deleted successfully!',
@@ -178,7 +183,6 @@ export default function DashboardPage({ colorScheme }) {
                 icon: <X />
             })
         }
-        setRerender(!rerender)
     }
 
     useEffect(() => {
