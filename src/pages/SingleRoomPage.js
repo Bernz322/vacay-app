@@ -242,20 +242,20 @@ export default function SingleRoomPage() {
         }
     }
 
-    const handleDelete = () => {
-        // Double insurance incase delete button is shown to other users.
-        if (!isListingOwner) {
-            showNotification({
-                title: 'Deleting failed!',
-                message: messagesListing || 'You are not the owner of the post!',
-                autoclose: 4000,
-                color: "red"
-            })
-        }
+    // const handleDelete = () => {
+    //     // Double insurance incase delete button is shown to other users.
+    //     if (!isListingOwner) {
+    //         showNotification({
+    //             title: 'Deleting failed!',
+    //             message: messagesListing || 'You are not the owner of the post!',
+    //             autoclose: 4000,
+    //             color: "red"
+    //         })
+    //     }
 
-        dispatch(deleteListing(id));
-        navigate('/listings')
-    }
+    //     dispatch(deleteListing(id));
+    //     navigate('/listings')
+    // }
 
     const handleDatePicker = (e) => {
         setDate(e)
@@ -504,9 +504,9 @@ export default function SingleRoomPage() {
                             </Text>
                         </Group>
 
-                        {user?.id === listing?.User?.id &&
+                        {/* {user?.id === listing?.User?.id &&
                             <Button mb={25} color='red' onClick={handleDelete}>Delete this listing</Button>
-                        }
+                        } */}
                     </Container>
                 </Paper >
                 :

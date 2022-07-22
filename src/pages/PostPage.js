@@ -182,7 +182,7 @@ export default function PostPage() {
         dispatch(createListing(data))
 
         setNewPin()
-        navigate('/listings')
+        // navigate('/listings')
     }
 
     const uploadImage = (img) => {
