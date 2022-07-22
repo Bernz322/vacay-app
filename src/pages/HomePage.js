@@ -5,10 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchListings } from '../features/listing/listingSlice';
-import { reservationReset } from '../features/reservation/reservationSlice';
 import { EmptyNotice, RoomCard, RoomCardSkeleton } from '../components'
-import img from "../images/hero-section.svg"
-import { userReset } from '../features/user/userSlice';
+import img from "../images/hero-section.svg";
 
 const useStyles = createStyles((theme) => ({
     paper: {
@@ -96,14 +94,12 @@ const useStyles = createStyles((theme) => ({
 export default function HomePage() {
     const { classes } = useStyles();
     const dispatch = useDispatch()
-    const { listings, isListingLoading, isListingError, messagesListing } = useSelector(state => state.listing)
+    const { listings, isListingLoading } = useSelector(state => state.listing)
     const REDIRECT_URL = '/listings'
 
     useEffect(() => {
-        dispatch(reservationReset())
-
         dispatch(fetchListings())
-    }, [dispatch, isListingError, messagesListing]);
+    }, [dispatch]);
 
     return (
         <Paper radius={0} className={classes.paper}>

@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { createListing, listingReset } from "../features/listing/listingSlice"
 import { reservationReset } from '../features/reservation/reservationSlice';
-import { userReset } from '../features/user/userSlice';
 import { MapBox } from '../components';
 
 const useStyles = createStyles((theme) => ({
@@ -182,26 +181,8 @@ export default function PostPage() {
 
         dispatch(createListing(data))
 
-        showNotification({
-            title: 'Listing created!',
-            message: messagesListing,
-            autoClose: 5000,
-            color: 'green',
-            icon: <Check />
-        })
-
-        if (isListingError) {
-            showNotification({
-                title: 'Something went wrong.',
-                message: messagesListing,
-                autoClose: 5000,
-                color: 'red',
-                icon: <X />
-            })
-        }
-
         setNewPin()
-        navigate("/")
+        navigate('/listings')
     }
 
     const uploadImage = (img) => {
@@ -240,15 +221,6 @@ export default function PostPage() {
         dispatch(reservationReset())
 
         setListingData({ ...listingData, room_image: imgArray })
-        if (isListingError) {
-            showNotification({
-                title: 'Something went wrong.',
-                message: messagesListing,
-                autoClose: 5000,
-                color: 'red',
-                icon: <X />
-            })
-        }
     }, [imgArray]);
 
     return (

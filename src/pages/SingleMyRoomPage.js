@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { createStyles, Paper, Container, Group, Button, Tooltip, Space, Badge, LoadingOverlay, Modal } from '@mantine/core'
 import { ArrowNarrowDown, Check, Circle, CircleOff, Eye, Trash, X } from 'tabler-icons-react';
-import { showNotification } from '@mantine/notifications';
 import DataTable from 'react-data-table-component'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import Helmet from 'react-helmet'
 
-import { fetchSingleListing, editSingleListing, deleteListing, listingReset } from "../features/listing/listingSlice"
+import { fetchSingleListing, editSingleListing, deleteListing } from "../features/listing/listingSlice"
 import { fetchAllRoomReservation, editReservation, reservationReset } from "../features/reservation/reservationSlice"
 import { reviewCount, roomRating } from '../utilities';
 import { Page404, PageLoader } from '.';
@@ -94,8 +93,8 @@ export default function SingleMyRoomPage({ colorScheme }) {
     const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { listing, isListingError, isListingSuccess, isListingLoading, messagesListing } = useSelector(state => state.listing)
-    const { roomReservations, isReserveError, isReserveLoading, messageReserve } = useSelector(state => state.reservation)
+    const { listing, isListingLoading } = useSelector(state => state.listing)
+    const { roomReservations, isReserveLoading } = useSelector(state => state.reservation)
     const { user } = useSelector(state => state.auth)
 
     const [deleteModal, setDeleteModal] = useState(false);
@@ -114,18 +113,8 @@ export default function SingleMyRoomPage({ colorScheme }) {
     }
 
     const handleDelete = () => {
-
         dispatch(deleteListing(id));
-
-        if (isListingSuccess) {
-            showNotification({
-                title: 'Post deleted',
-                message: 'Post deleted successfully',
-                autoclose: 4000,
-                color: "green"
-            })
-            navigate('/my-listings')
-        }
+        navigate('/listings')
     }
 
     const reservationsColumns = [

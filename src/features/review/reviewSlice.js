@@ -1,5 +1,7 @@
+import { showNotification } from "@mantine/notifications";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios'
+import { Check, X } from "tabler-icons-react";
 
 const initialState = {
     review: {},
@@ -21,9 +23,22 @@ export const createReview = createAsyncThunk('review/create', async (reviewData,
         }
 
         const res = await axios.post(`${API_URL}`, reviewData, config)
+        showNotification({
+            title: 'Listing created!',
+            autoClose: 5000,
+            color: 'green',
+            icon: <Check />
+        })
         return res.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -38,9 +53,22 @@ export const deleteReview = createAsyncThunk('review/delete', async (id, thunkAP
         }
 
         const res = await axios.post(`${API_URL}/${id}`, config)
+        showNotification({
+            title: 'Listing created!',
+            autoClose: 5000,
+            color: 'green',
+            icon: <Check />
+        })
         return res.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })

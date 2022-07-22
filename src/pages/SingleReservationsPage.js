@@ -149,7 +149,7 @@ export default function SingleReservationsPage() {
     const { id } = useParams()
     const dispatch = useDispatch();
     const { reservation, isReserveLoading } = useSelector(state => state.reservation)
-    const { review, isReviewSuccess, isReviewLoading, isReviewError, messageReview } = useSelector(state => state.review)
+    const { review, isReviewLoading } = useSelector(state => state.review)
     const { user } = useSelector(state => state.auth)
 
     const date = [new Date(reservation?.reservation?.start_date), new Date(reservation?.reservation?.end_date)] || "";
@@ -182,23 +182,6 @@ export default function SingleReservationsPage() {
         dispatch(createReview(reviewData))
 
         setRerender(!rerender)
-        if (isReviewError) {
-            showNotification({
-                title: 'Uhuh! Something went wrong while submitting your review',
-                message: messageReview,
-                autoclose: 4000,
-                color: "red"
-            })
-            return
-        }
-
-        if (isReviewSuccess) {
-            showNotification({
-                title: 'Thanks for your feedback',
-                autoclose: 4000,
-                color: "red"
-            })
-        }
     }
 
     useEffect(() => {

@@ -5,8 +5,6 @@ import Helmet from 'react-helmet'
 
 import { FilterRooms, RoomCard, RoomCardSkeleton } from '../components'
 import { fetchListings } from '../features/listing/listingSlice';
-import { reservationReset } from '../features/reservation/reservationSlice';
-import { userReset } from '../features/user/userSlice';
 
 const useStyles = createStyles((theme) => ({
     paper: {
@@ -45,7 +43,7 @@ const useStyles = createStyles((theme) => ({
 
 export default function RoomPage() {
     const { classes } = useStyles();
-    const { listings, isListingLoading, isListingError, messagesListing } = useSelector(state => state.listing);
+    const { listings, isListingLoading } = useSelector(state => state.listing);
     const dispatch = useDispatch();
     const REDIRECT_URL = '/listings'
 
@@ -76,10 +74,8 @@ export default function RoomPage() {
     const currentListings = onlineListing.slice(indexOfFirstListing, indexOfLastListing) // (Slice the listins from 0, 10)
 
     useEffect(() => {
-        dispatch(reservationReset())
-
         dispatch(fetchListings())
-    }, [isListingError, dispatch, messagesListing]);
+    }, [dispatch]);
 
     return (
         <Paper radius={0} className={classes.paper}>

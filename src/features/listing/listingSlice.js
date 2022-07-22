@@ -1,5 +1,7 @@
+import { showNotification } from "@mantine/notifications";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios'
+import { Check, X } from "tabler-icons-react";
 
 const initialState = {
     listings: [],
@@ -19,6 +21,13 @@ export const fetchListings = createAsyncThunk('listing/fetchAll', async (_, thun
         return res.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -29,6 +38,13 @@ export const fetchListingsOfUser = createAsyncThunk('listing/fetchUserListings',
         return res.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -39,6 +55,13 @@ export const fetchSingleListing = createAsyncThunk('listing/fetchOne', async (id
         return (res.data)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -53,9 +76,22 @@ export const editSingleListing = createAsyncThunk('listing/editOne', async (data
             }
         }
         const res = await axios.put(`${API_URL}`, { roomId: data.room_id, listing_status: data.status.toString() }, config)
+        showNotification({
+            title: 'Listing updated!',
+            autoClose: 5000,
+            color: 'green',
+            icon: <Check />
+        })
         return (res.data)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -69,10 +105,25 @@ export const createListing = createAsyncThunk('listing/create', async (listingDa
             }
         }
         const res = await axios.post(`${API_URL}`, listingData, config)
-        if (res.data) localStorage.removeItem("images")
+        if (res.data) {
+            localStorage.removeItem("images")
+            showNotification({
+                title: 'Listing created!',
+                autoClose: 5000,
+                color: 'green',
+                icon: <Check />
+            })
+        }
         return (res.data)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -86,9 +137,22 @@ export const deleteListing = createAsyncThunk('listing/delete', async (id, thunk
             }
         }
         const res = await axios.delete(`${API_URL}/${id}`, config)
+        showNotification({
+            title: 'Post deleted',
+            message: 'Post deleted successfully',
+            autoclose: 4000,
+            color: "green"
+        })
         return (res.data)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        showNotification({
+            title: 'Something went wrong.',
+            message: message,
+            autoClose: 5000,
+            color: 'red',
+            icon: <X />
+        })
         return thunkAPI.rejectWithValue(message)
     }
 })
