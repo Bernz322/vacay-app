@@ -66,3 +66,34 @@ export const hasTokenExpired = (user) => {
         return (millisecondsElapsed) > Number(expire_time)    // Convert the elapse milisec to sec and compare to the expireTime (3600 sec)
     }
 }
+
+export const getUserGoogle = () => {
+    const queryString = window.location.search; // returns the url after "?"
+    const urlParams = new URLSearchParams(queryString); // converts the url to an object
+    let id = parseInt(urlParams.get('id'));
+    let name = urlParams.get('name');
+    let email = urlParams.get('email');
+    let phone_number = urlParams.get('phone_number');
+    let description = urlParams.get('description');
+    let profile_image = urlParams.get('profile_image');
+    let token = urlParams.get('token');
+    let time_stamp = parseInt(urlParams.get('time_stamp'));
+    let expire_time = parseInt(urlParams.get('expire_time'));
+
+    const userGoogle = {
+        id,
+        name,
+        email,
+        phone_number,
+        description,
+        profile_image,
+        token,
+        time_stamp,
+        expire_time
+    }
+    if (userGoogle) {
+        localStorage.setItem('user', JSON.stringify(userGoogle))
+    } else {
+        return
+    }
+}

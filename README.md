@@ -15,6 +15,7 @@
     <li>Node.js</li>
     <li>Express.js</li>
     <li>JWT</li>
+    <li>Google OAuth 2.0</li>
     <li>Sequelize ORM</li>
     <li>MySQL</li>
     <li>Netlify (Front-end) & Heroku (Back-end) 🚀</li>
@@ -56,6 +57,7 @@
             <li>Manage all listings (Make them online/ offline).</li>
         </ul>
     <li>View profile of any individuals and see their most popular listing and personal information.</li>
+    <li>Login using Google Account.</li>
     <li>With theming support (Light/ Dark).</li>
     <li>Mobile Responsive.</li>
 </ul>

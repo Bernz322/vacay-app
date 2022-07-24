@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 import { HomePage, Auth, Page404, RoomPage, PostPage, MyRoomPage, AboutPage, MyReservationsPage, SingleRoomPage, SingleMyRoomPage, SingleReservationsPage, DashboardPage, UserProfilePage, PageLoader } from "./pages"
 import { Navbar, Footer } from "./components"
-import { hasTokenExpired } from "./utilities"
+import { getUserGoogle, hasTokenExpired } from "./utilities"
 import { logout, authReset } from './features/auth/authSlice';
 import { Helmet } from "react-helmet";
 
@@ -18,9 +18,15 @@ function App() {
   const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const queryString = window.location.search; // returns the url after "?"
+  const urlParams = new URLSearchParams(queryString); // converts the url to an object
+  let id = urlParams.get('id');
 
   useEffect(() => {
     localStorage.setItem("mantine-color-scheme", JSON.stringify(colorScheme));
+    if (id) {
+      getUserGoogle();
+    }
     if (user !== null || user !== undefined) {
       if (hasTokenExpired(user)) {
         dispatch(logout())
@@ -31,10 +37,9 @@ function App() {
             "color: yellow; font-size: 35px; background-color: red;"
           );
         })
-
       }
     }
-  }, [colorScheme, user, dispatch, navigate]);
+  }, [colorScheme, user, dispatch, navigate, id]);
 
   const toggleColorScheme = () => {
     colorScheme === "light" ? setColorScheme("dark") : setColorScheme("light")

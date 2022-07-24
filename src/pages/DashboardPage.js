@@ -316,26 +316,26 @@ export default function DashboardPage({ colorScheme }) {
                                 }>Contact Functionality</List.Item>
                             <List.Item
                                 icon={
-                                    <ThemeIcon color="yellow" size={24} radius="xl">
-                                        <CircleDashed size={16} />
+                                    <ThemeIcon color="green" size={24} radius="xl">
+                                        <CircleCheck size={16} />
                                     </ThemeIcon>
                                 }>Deploy</List.Item>
                             <List.Item
                                 icon={
-                                    <ThemeIcon color="yellow" size={24} radius="xl">
-                                        <CircleDashed size={16} />
+                                    <ThemeIcon color="green" size={24} radius="xl">
+                                        <CircleCheck size={16} />
                                     </ThemeIcon>
                                 }>Backend to Heroku</List.Item>
                             <List.Item
                                 icon={
-                                    <ThemeIcon color="yellow" size={24} radius="xl">
-                                        <CircleDashed size={16} />
+                                    <ThemeIcon color="green" size={24} radius="xl">
+                                        <CircleCheck size={16} />
                                     </ThemeIcon>
                                 }>Frontend to Netlify</List.Item>
                             <List.Item
                                 icon={
-                                    <ThemeIcon color="yellow" size={24} radius="xl">
-                                        <CircleDashed size={16} />
+                                    <ThemeIcon color="green" size={24} radius="xl">
+                                        <CircleCheck size={16} />
                                     </ThemeIcon>
                                 }>GoDaddy Domain</List.Item>
                             <List.Item

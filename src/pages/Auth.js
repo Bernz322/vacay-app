@@ -90,6 +90,7 @@ export const dropzoneChildren = (status, imgArray, theme) => (
         </div>
     </Group >
 );
+const API_URL = process.env.NODE_ENV !== 'production' ? `http://localhost:8000/api/auth` : `${process.env.REACT_APP_API_ENDPOINT}api/auth`
 
 export default function Auth() {
     const { classes } = useStyles();
@@ -207,6 +208,15 @@ export default function Auth() {
         }
     }
 
+    const googleLogin = () => {
+        // dispatch(loginGoogle())
+        window.open(`${API_URL}/google`, "_self");
+    }
+
+    const githubLogin = () => {
+        window.open(`${API_URL}/github`, "_self");
+    }
+
     useEffect(() => {
         form.values.profile_image = imgArray[0]
         if (isError) {
@@ -236,7 +246,7 @@ export default function Auth() {
                 </Text>
 
                 <div className={classes.oauth}>
-                    <Button className={classes.oauthBtn} leftIcon={<BrandGoogle size={14} />}> Continue with Google</Button>
+                    <Button className={classes.oauthBtn} leftIcon={<BrandGoogle size={14} />} onClick={googleLogin}> Continue with Google</Button>
                     <Space w="sm" />
                     <Button className={classes.oauthBtn}
                         sx={(theme) => ({

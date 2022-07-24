@@ -28,6 +28,21 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
         return thunkAPI.rejectWithValue(message)
     }
 })
+
+// Login User
+export const loginGoogle = createAsyncThunk("auth/googleLogin", async (thunkAPI) => {
+    try {
+        const res = await axios.get(`${API_URL}/google`)
+        if (res.data) {
+            localStorage.setItem('user', JSON.stringify(res.data))
+        }
+        return res.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // Register User
 export const register = createAsyncThunk("auth/register", async (user, thunkAPI) => {
     try {
