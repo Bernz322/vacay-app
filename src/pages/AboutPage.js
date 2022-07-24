@@ -132,7 +132,7 @@ export default function AboutPage() {
                                         Unfortunately, this is only exclusive for Region XIII (CARAGA). We have no plans on making this available nationwide for now.
                                     </Accordion.Item>
                                     <Accordion.Item label="Will this support Map Pinning?" className={classes.item}>
-                                        Yes! It is currently underdevelopment and will be released next. Follow my development on <a className={classes.h1} href="https://github.com/Bernz322/vacay">Github</a>
+                                        Yes and it's already out! We are excited to see you use it.
                                     </Accordion.Item>
                                     <Accordion.Item label="How is payment done?" className={classes.item}>
                                         This platform doesn't have any payment features. All payments are and should be done in person. Kindly contact the owner of a listing after reservation to keep in touch with them.
