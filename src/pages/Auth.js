@@ -209,7 +209,6 @@ export default function Auth() {
     }
 
     const googleLogin = () => {
-        // dispatch(loginGoogle())
         window.open(`${API_URL}/google`, "_self");
     }
 
@@ -257,7 +256,7 @@ export default function Auth() {
                             },
                         })}
                         leftIcon={<BrandGithub size={14} />}
-                    >Login with Github
+                        onClick={githubLogin}>Login with Github
                     </Button>
                 </div>
                 <Divider label="Or continue with email" labelPosition="center" my="lg" />

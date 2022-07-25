@@ -18,11 +18,11 @@ function App() {
   const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const queryString = window.location.search; // returns the url after "?"
-  const urlParams = new URLSearchParams(queryString); // converts the url to an object
-  let id = urlParams.get('id');
 
   useEffect(() => {
+    const queryString = window.location.search; // returns the url after "?"
+    const urlParams = new URLSearchParams(queryString); // converts the url to an object
+    let id = urlParams.get('id');
     localStorage.setItem("mantine-color-scheme", JSON.stringify(colorScheme));
     if (id) {
       getUserGoogle();
@@ -39,7 +39,7 @@ function App() {
         })
       }
     }
-  }, [colorScheme, user, dispatch, navigate, id]);
+  }, [colorScheme, user, dispatch, navigate]);
 
   const toggleColorScheme = () => {
     colorScheme === "light" ? setColorScheme("dark") : setColorScheme("light")
