@@ -96,9 +96,7 @@ export default function ProfileMenu() {
     }
 
     const handleDelete = () => {
-        dispatch(deleteUser(currentUser.id));
-
-        if (isUserSuccess) {
+        dispatch(deleteUser(currentUser.id)).then(() => {
             showNotification({
                 title: 'Account deleted successfully',
                 autoclose: 4000,
@@ -107,17 +105,15 @@ export default function ProfileMenu() {
             })
             dispatch(logout())
             dispatch(authReset())
-            dispatch(userReset()).then(() => {
-                navigate('/')
-            })
-        }
+            dispatch(userReset())
+            navigate('/')
+        })
     }
 
     const handleLogout = () => {
         dispatch(logout())
-        dispatch(authReset()).then(() => {
-            navigate('/')
-        })
+        dispatch(authReset())
+        navigate('/')
     }
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from 'react'
-import { NotificationsProvider } from '@mantine/notifications';
+import { NotificationsProvider, showNotification } from '@mantine/notifications';
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { useSelector } from "react-redux";
@@ -18,28 +18,46 @@ function App() {
   const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [successOAuth, setSuccessOAuth] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("mantine-color-scheme", JSON.stringify(colorScheme));
+    if (user !== null || user !== undefined) {
+      if (hasTokenExpired(user)) {
+        dispatch(logout())
+        dispatch(authReset())
+        navigate('/')
+        console.log(
+          "%cExpired token. Please login again.",
+          "color: yellow; font-size: 35px; background-color: red;"
+        );
+        return showNotification({
+          title: 'Expired Token! Please login again.',
+          autoClose: 2000,
+          color: 'red',
+        })
+      }
+    }
+  }, [colorScheme, user, dispatch, navigate]);
 
   useEffect(() => {
     const queryString = window.location.search; // returns the url after "?"
     const urlParams = new URLSearchParams(queryString); // converts the url to an object
     let id = urlParams.get('id');
-    localStorage.setItem("mantine-color-scheme", JSON.stringify(colorScheme));
+
     if (id) {
       getUserGoogle();
+      setSuccessOAuth(true);
     }
-    if (user !== null || user !== undefined) {
-      if (hasTokenExpired(user)) {
-        dispatch(logout())
-        dispatch(authReset()).then(() => {
-          navigate('/')
-          console.log(
-            "%cExpired token. Please login again.",
-            "color: yellow; font-size: 35px; background-color: red;"
-          );
-        })
-      }
+    return () => { };
+  }, []);
+
+  useEffect(() => {
+    if (successOAuth) {
+      window.location.href = "/"
     }
-  }, [colorScheme, user, dispatch, navigate]);
+    return () => { };
+  }, [successOAuth]);
 
   const toggleColorScheme = () => {
     colorScheme === "light" ? setColorScheme("dark") : setColorScheme("light")
