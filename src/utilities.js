@@ -67,7 +67,7 @@ export const hasTokenExpired = (user) => {
     }
 }
 
-export const getUserGoogle = () => {
+export const getOAuthUser = () => {
     const queryString = window.location.search; // returns the url after "?"
     const urlParams = new URLSearchParams(queryString); // converts the url to an object
     let id = parseInt(urlParams.get('id'));
@@ -80,7 +80,7 @@ export const getUserGoogle = () => {
     let time_stamp = parseInt(urlParams.get('time_stamp'));
     let expire_time = parseInt(urlParams.get('expire_time'));
 
-    const userGoogle = {
+    const userOAuth = {
         id,
         name,
         email,
@@ -91,8 +91,8 @@ export const getUserGoogle = () => {
         time_stamp,
         expire_time
     }
-    if (userGoogle) {
-        localStorage.setItem('user', JSON.stringify(userGoogle))
+    if (userOAuth) {
+        localStorage.setItem('user', JSON.stringify(userOAuth))
     } else {
         return
     }

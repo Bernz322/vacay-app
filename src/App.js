@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 import { HomePage, Auth, Page404, RoomPage, PostPage, MyRoomPage, AboutPage, MyReservationsPage, SingleRoomPage, SingleMyRoomPage, SingleReservationsPage, DashboardPage, UserProfilePage, PageLoader } from "./pages"
 import { Navbar, Footer } from "./components"
-import { getUserGoogle, hasTokenExpired } from "./utilities"
+import { getOAuthUser, hasTokenExpired } from "./utilities"
 import { logout, authReset } from './features/auth/authSlice';
 import { Helmet } from "react-helmet";
 
@@ -46,7 +46,7 @@ function App() {
     let id = urlParams.get('id');
 
     if (id) {
-      getUserGoogle();
+      getOAuthUser();
       setSuccessOAuth(true);
     }
     return () => { };
