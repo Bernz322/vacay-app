@@ -1,8 +1,12 @@
-import React from 'react'
-import { createStyles, Paper, Container, Grid, Col, Image, Title, Accordion, Text, SimpleGrid, TextInput, Textarea, Group, Button } from '@mantine/core'
+import React, { useState } from 'react'
+import { createStyles, Paper, Container, Grid, Col, Image, Title, Accordion, Text, SimpleGrid, TextInput, Textarea, Group, Button, Loader } from '@mantine/core'
 import Helmet from 'react-helmet'
+import { useDispatch, useSelector } from 'react-redux'
 
 import logo from "../images/Logo.png"
+import { showNotification } from '@mantine/notifications'
+import { X } from 'tabler-icons-react'
+import { sendContactMessage } from '../features/contact/contactSlice'
 
 const useStyles = createStyles((theme) => ({
     paper: {
@@ -99,6 +103,55 @@ const useStyles = createStyles((theme) => ({
 
 export default function AboutPage() {
     const { classes } = useStyles();
+    const dispatch = useDispatch();
+    const { isContactLoading } = useSelector(state => state.contact);
+    const [contactMessage, setContactMessage] = useState({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+    });
+
+    const validateEmail = (email) => {
+        return email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
+
+    const handleContactMessageSubmit = (e) => {
+        e.preventDefault()
+        if (contactMessage.email === "" || contactMessage.subject === "") {
+            return showNotification({
+                title: 'Please fill in required fields',
+                message: 'Email and Subject fields are required.',
+                autoClose: 5000,
+                color: 'red',
+                icon: <X />
+            })
+        }
+
+        if (!validateEmail(contactMessage?.email)) {
+            return showNotification({
+                title: 'Uhuh! Something went wrong',
+                message: "Invalid email address.",
+                autoclose: 5000,
+                color: "red",
+                icon: <X />
+            })
+        }
+
+        // dispatch goes here and .then to empty fields
+        dispatch(sendContactMessage(contactMessage)).then(() => {
+            setContactMessage({
+                name: "",
+                email: "",
+                subject: "",
+                message: ""
+            })
+        })
+    }
+
+    console.log(isContactLoading)
 
     return (
         <Paper radius={0} className={classes.paper}>
@@ -109,7 +162,7 @@ export default function AboutPage() {
                 <Grid id="faq-grid" gutter={50} mt='xl' mb='xl'>
                     <Col span={12} md={6} className={classes.aboutUs}>
                         <Title order={1} mb='md'>About us</Title>
-                        <Text>Vacay is a platform where you can host and reserve a listing within CARAGA Region. It is developed by a single developer which initially serves as an additional portfolio project. Despite this, it will receive full support and updates in the future. Follow the project on <a className={classes.h1} href="https://github.com/Bernz322/vacay">Github</a> which is open source and is open for collaboration.</Text>
+                        <Text>Vacay is an open-source platform where you can host and reserve listings within CARAGA Region. It is developed by a single developer which initially serves as an additional portfolio project. Despite this, it will receive full support and updates in the future. Follow the project on <a className={classes.h1} href="https://github.com/Bernz322/vacay">Github</a>. Open for collaborations.</Text>
                     </Col>
                     <Col span={12} md={6} className={classes.aboutUs}>
                         <Image width={200} height={200} src={logo} alt="Frequently Asked Questions" />
@@ -135,7 +188,7 @@ export default function AboutPage() {
                                         Yes and it's already out! We are excited to see you use it.
                                     </Accordion.Item>
                                     <Accordion.Item label="How is payment done?" className={classes.item}>
-                                        This platform doesn't have any payment features. All payments are and should be done in person. Kindly contact the owner of a listing after reservation to keep in touch with them.
+                                        This platform doesn't have any payment features. Payments should be done in person after you reached the destination. Kindly contact the owner of a listing after reservation to keep in touch with them.
                                     </Accordion.Item>
                                     <Accordion.Item label="How can I reset my password?" className={classes.item} >
                                         We do not support password resetting.
@@ -156,27 +209,28 @@ export default function AboutPage() {
                 </div>
 
                 <div className={classes.wrapper2}>
-                    <form className={classes.form} onSubmit={(event) => event.preventDefault()}>
+                    <form className={classes.form} onSubmit={(e) => handleContactMessageSubmit(e)}>
                         <Text size="lg" weight={700} className={classes.title2}>
                             Get in touch with us
                         </Text>
 
                         <div className={classes.fields}>
                             <SimpleGrid cols={2} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
-                                <TextInput label="Your name" placeholder="Your name" />
-                                <TextInput label="Your email" placeholder="youremail@vacay.dev" required />
+                                <TextInput value={contactMessage.name} label="Your name" placeholder="Your name" onChange={(e) => setContactMessage({ ...contactMessage, name: e.target.value })} />
+                                <TextInput value={contactMessage.email} label="Your email" placeholder="youremail@vacay.dev" required onChange={(e) => setContactMessage({ ...contactMessage, email: e.target.value })} />
                             </SimpleGrid>
-                            <TextInput mt="md" label="Subject" placeholder="Subject" required />
+                            <TextInput value={contactMessage.subject} mt="md" label="Subject" placeholder="Subject" required onChange={(e) => setContactMessage({ ...contactMessage, subject: e.target.value })} />
                             <Textarea
                                 mt="md"
                                 label="Your message"
                                 placeholder="Please include all relevant information"
-                                minRows={3}
+                                minRows={3} value={contactMessage.message}
+                                onChange={(e) => setContactMessage({ ...contactMessage, message: e.target.value })}
                             />
 
                             <Group position="right" mt="md">
                                 <Button type="submit" className={classes.control}>
-                                    Send message
+                                    {isContactLoading ? <Loader color="white" size="sm" /> : "Send Message"}
                                 </Button>
                             </Group>
                         </div>
