@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMantineTheme, createStyles, Paper, Container, Select, Text, TextInput, NumberInput, Textarea, CheckboxGroup, Checkbox, Group, Button, Image, LoadingOverlay } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { Check, Photo, Upload, X } from 'tabler-icons-react';
+import { Photo, Upload, X } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
 import { useDispatch, useSelector } from 'react-redux'
 import Helmet from 'react-helmet'
@@ -138,7 +138,7 @@ export default function PostPage() {
     const theme = useMantineTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isListingError, isListingLoading, messagesListing } = useSelector(state => state.listing);
+    const { isListingLoading } = useSelector(state => state.listing);
     const { user } = useSelector(state => state.auth);
     const [imgArray, setImgArray] = useState(JSON.parse(localStorage.getItem("images")) || [])    // Put in local storage in case listing form is not submitted
     const [imgUploading, setImgUploading] = useState(false)
@@ -183,7 +183,6 @@ export default function PostPage() {
             setNewPin()
             navigate('/listings')
         })
-
     }
 
     const uploadImage = (img) => {
